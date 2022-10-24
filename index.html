@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+
+  <title>IMS - NHS APP message editor</title>
+
+  <link rel="preload" as="font" href="https://assets.nhs.uk/fonts/FrutigerLTW01-55Roman.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="https://assets.nhs.uk/fonts/FrutigerLTW01-65Bold.woff2" type="font/woff2" crossorigin>
+  <link rel="preconnect  dns-prefetch" href="https://www.nhs.uk/">
+  <link rel="preconnect  dns-prefetch" href="https://assets.nhs.uk/" crossorigin>
+
+<!-- Quill Theme included stylesheets -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.7/quill.bubble.css" rel="stylesheet">
+<!-- NHSFrontend Styles -->
+<link rel="stylesheet" href="nhsfrontend/css/nhsuk-6.1.2.min.css">
+
+
+<!-- NHSFrontend Scripts -->
+<script src="nhsfrontend/js/nhsuk-6.1.2.min.js" defer></script>
+
+<!-- NHSFrontend Favicons -->
+<link rel="shortcut icon" href="nhsfrontend/assets/favicons/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="nhsfrontend/assets/favicons/apple-touch-icon-180x180.png">
+<link rel="mask-icon" href="nhsfrontend/assets/favicons/favicon.svg" color="#005eb8">
+<link rel="icon" sizes="192x192" href="nhsfrontend/assets/favicons/favicon-192x192.png">
+<meta name="msapplication-TileImage" content="nhsfrontend/assets/favicons/mediumtile-144x144.png">
+<meta name="msapplication-TileColor" content="#005eb8">
+<meta name="msapplication-square70x70logo" content="nhsfrontend/assets/favicons/smalltile-70x70.png">
+<meta name="msapplication-square150x150logo" content="nhsfrontend/assets/favicons/mediumtile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="nhsfrontend/assets/favicons/widetile-310x150.png">
+<meta name="msapplication-square310x310logo" content="nhsfrontend/assets/favicons/largetile-310x310.png">
+
+
+<!-- 
+  Quill text editor  https://github.com/quilljs/quill
+  Main Quill library 
+-->
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+<!-- 
+TurnDown to convert to Markdown
+https://github.com/mixmark-io/turndown
+ -->
+<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+
+<!-- anything extra that might be needed goes here -->
+<link rel="stylesheet" href="default.css">
+
+
+</head>
+
+<body class="">
+  <script>
+    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  </script>
+
+  <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
+
+  <header class="nhsuk-header" role="banner">
+    <div class="nhsuk-width-container nhsuk-header__container">
+      <div class="nhsuk-header__logo nhsuk-header__logo--only"><a class="nhsuk-header__link" href="/" aria-label="NHS homepage">
+
+          <svg class="nhsuk-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16" height="40" width="100">
+            <path class="nhsuk-logo__background" fill="#005eb8" d="M0 0h40v16H0z"></path>
+            <path class="nhsuk-logo__text" fill="#fff" d="M3.9 1.5h4.4l2.6 9h.1l1.8-9h3.3l-2.8 13H9l-2.7-9h-.1l-1.8 9H1.1M17.3 1.5h3.6l-1 4.9h4L25 1.5h3.5l-2.7 13h-3.5l1.1-5.6h-4.1l-1.2 5.6h-3.4M37.7 4.4c-.7-.3-1.6-.6-2.9-.6-1.4 0-2.5.2-2.5 1.3 0 1.8 5.1 1.2 5.1 5.1 0 3.6-3.3 4.5-6.4 4.5-1.3 0-2.9-.3-4-.7l.8-2.7c.7.4 2.1.7 3.2.7s2.8-.2 2.8-1.5c0-2.1-5.1-1.3-5.1-5 0-3.4 2.9-4.4 5.8-4.4 1.6 0 3.1.2 4 .6"></path>
+          </svg>
+
+        </a>
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="nhsuk-width-container ">
+
+    <main class="nhsuk-main-wrapper " id="maincontent" role="main">
+
+      <h1>NHS APP Message Editor</h1>
+      <p>
+        Use the Editor below to create your message and generate the Markup format for NHS App Messages.
+      </P><p>
+        Copy the Output for sending as the payload contentString in your message request  
+      </p><p>
+        To format the message Highlight the text to be formatted and use the pop-up editor controls.
+      </p>
+      
+      <div id="editorform" class="nhsuk-form-group">
+        
+        <div id="lengthErrorSummary" class="nhsuk-error-summary" style="display:none" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
+          <h2 class="nhsuk-error-summary__title" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="nhsuk-error-summary__body">
+            <ul class="nhsuk-list nhsuk-error-summary__list">
+              <li>
+                <a href="#">Markdown exceeds the 5000 Character Limit . Please reduce your content </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- HTML editor area  -->
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-one-half">
+                <label class="nhsuk-label nhsuk-u-font-weight-bold " for="editor">
+                    Create your Message :
+                </label>
+                <div class="nhsuk-hint" id="editor-hint">
+                    Highlight to edit your message
+                  </div>
+                  <!-- <div id="toolbar">
+                  <span class="ql-formats">
+                    <button type="button" class="ql-header" value="2">H2</button>
+                    <button type="button" class="ql-header" value="3">H3</button>
+                      <select class="ql-header">
+                      
+                      <option selected>Normal</option>
+                      <option value="test">H1</option>
+                      <option value="test2">H2</option>
+                    </select>
+                  </span>
+                </div>-->
+                <div class="nhsuk-textarea" id="editor" name="editor" rows="5" aria-describedby="editor-hint"></div>
+            </div>
+
+        <!-- Markdown Output area -->
+        <!-- <div class="nhsuk-grid-row"> -->
+            <div class="nhsuk-grid-column-one-half">
+                <label class="nhsuk-label nhsuk-u-font-weight-bold" for="example">
+                    Markdown :
+                </label>
+                <div class="nhsuk-hint" id="markdown-hint">
+                  Output format - copy this 
+                </div>
+                <div class="nhsuk-textarea" id="markdown" name="markdown" rows="5" aria-describedby="markdown-hint"></div>
+                <div class="charcounter-area"><span id="char-count" class="charcount">0</span> of 5000 char limit. <span id="char-leftcount" class="charsleft">5000</span> chars left</div>
+                <span id="lengthError" style="display:none;" class="nhsuk-error-message">
+                  <span class="nhsuk-u-visually-hidden">Error:</span> Markdown Exceeds 5000 Characters
+                </span>
+              </div>
+        </div>
+
+    </div>
+    </main>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="nhsuk-footer" id="nhsuk-footer">
+      <div class="nhsuk-width-container">
+        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+
+
+<script defer  src="default.js" > </script>
