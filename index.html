@@ -63,7 +63,7 @@ https://github.com/mixmark-io/turndown
   <a class="nhsuk-skip-link" href="#maincontent">Skip to main content</a>
 
   <header class="nhsuk-header" role="banner">
-    <div class="nhsuk-width-container nhsuk-header__container">
+    <div class="nhsuk-width-container-fluid nhsuk-header__container">
       <div class="nhsuk-header__logo nhsuk-header__logo--only"><a class="nhsuk-header__link" href="/" aria-label="NHS homepage">
 
           <svg class="nhsuk-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16" height="40" width="100">
@@ -78,7 +78,7 @@ https://github.com/mixmark-io/turndown
 
   </header>
 
-  <div class="nhsuk-width-container ">
+  <div class="nhsuk-width-container-fluid ">
 
     <main class="nhsuk-main-wrapper " id="maincontent" role="main">
 
@@ -91,6 +91,11 @@ https://github.com/mixmark-io/turndown
         To format the message Highlight the text to be formatted and use the pop-up editor controls.
       </p>
       
+      <div class="nhsuk-inset-text">
+        <span class="nhsuk-u-visually-hidden">Information: </span>
+        <p><strong>Always</strong> test your message in Dev or AOS environments before using with a production run </p>
+      </div>
+
       <div id="editorform" class="nhsuk-form-group">
         
         <div id="lengthErrorSummary" class="nhsuk-error-summary" style="display:none" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
@@ -105,6 +110,20 @@ https://github.com/mixmark-io/turndown
             </ul>
           </div>
         </div>
+
+
+        <div id="RTLorLEFTWarning" class="nhsuk-warning-callout" style="display:none" >
+          <h3 class="nhsuk-warning-callout__label">
+            <span role="text">
+              <span class="nhsuk-u-visually-hidden">Important: </span>
+              RTL or Right Align Detected
+            </span>
+          </h3>
+          <p>We have detected potential right to left language or right alignment formatting. 
+            <br> The NHS App does not currently support right to left or right aligned Content 
+            <br> Use with caution </p>
+        </div>
+
 
         <!-- HTML editor area  -->
         <div class="nhsuk-grid-row">
@@ -127,15 +146,27 @@ https://github.com/mixmark-io/turndown
                     </select>
                   </span>
                 </div>-->
-                <div class="nhsuk-textarea" id="editor" name="editor" rows="5" aria-describedby="editor-hint"></div>
+                <div class="nhsuk-textarea nhsuk-u-reading-width" id="editor" name="editor" rows="5" aria-describedby="editor-hint"></div>
             </div>
 
         <!-- Markdown Output area -->
         <!-- <div class="nhsuk-grid-row"> -->
             <div class="nhsuk-grid-column-one-half">
-                <label class="nhsuk-label nhsuk-u-font-weight-bold" for="example">
+                <label class="nhsuk-label nhsuk-u-font-weight-bold" for="markdown">
                     Markdown :
                 </label>
+                
+                <!--
+                <div class="nhsuk-checkboxes">
+
+                  <div class="nhsuk-checkboxes__item">
+                    <input class="nhsuk-checkboxes__input" id="nl2br" name="nl2br" type="checkbox" value="nl2br">
+                    <label class="nhsuk-label nhsuk-checkboxes__label" for="nl2br">
+                      line breaks as "\n"
+                    </label>
+                  </div>
+                </div> -->
+
                 <div class="nhsuk-hint" id="markdown-hint">
                   Output format - copy this 
                 </div>
@@ -148,12 +179,14 @@ https://github.com/mixmark-io/turndown
         </div>
 
     </div>
+    
     </main>
   </div>
 
   <footer role="contentinfo">
     <div class="nhsuk-footer" id="nhsuk-footer">
-      <div class="nhsuk-width-container">
+      <div class="nhsuk-width-container-fluid">
+        <p class="nhsuk-body" >View project code on Github <a href="https://github.com/NHS-SCW-Web-Apps-Team/NHS-App-Message-Editor" class="nhsuk-link">https://github.com/NHS-SCW-Web-Apps-Team/NHS-App-Message-Editor</a> </p>
         <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
       </div>
     </div>
