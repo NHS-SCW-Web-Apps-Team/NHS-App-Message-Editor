@@ -47,10 +47,62 @@ var toolbarOptions = [
 var quill = new Quill('#editor', {
         theme: 'bubble',
         modules: { 
-          toolbar: toolbarOptions
+          toolbar: {
+            container: toolbarOptions,
+            handlers: {
+              image: imageHandler
+            }
+          }
           //toolbar: "#toolbar"
         }
 });
+
+/*
+function imageHandler() {
+  var range = this.quill.getSelection();
+  var value = prompt('please copy paste the image url here.');
+  if(value){
+      this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER).format('alt','test');
+  }
+}
+*/
+function imageHandler() {
+  const tooltip = this.quill.theme.tooltip;
+  const originalSave = tooltip.save;
+  const originalHide = tooltip.hide;
+
+  tooltip.save = function () {
+    const range = this.quill.getSelection(true);
+    const value = this.textbox.value;
+    if (value) {
+      this.quill.insertEmbed(range.index, 'image', value, 'user');
+    }
+  };
+  // Called on hide and save.
+  tooltip.hide = function () {
+    tooltip.save = originalSave;
+    tooltip.hide = originalHide;
+    tooltip.hide();
+  };
+  tooltip.edit('image');
+  tooltip.textbox.placeholder = 'Embed URL';
+}
+
+const Image = Quill.import('formats/image');
+
+class ImageBlot extends Image {
+  static create(value) {
+    const node = super.create(value);
+    if (typeof value === 'string') {
+      node.setAttribute('src', this.sanitize(value));
+      node.setAttribute('alt', this.sanitize(value).split('/').reverse()[0].split('.')[0]);
+    }
+    return node;
+  }
+}
+
+Quill.register(ImageBlot);
+
 
 // when edited then update markdown 
 
